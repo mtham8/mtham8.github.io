@@ -16,7 +16,7 @@
 <h2>Limitations</h2>
 <p>There are some limitations using the TF-IDF VSM. IDF is calculated not based on relevance information, but on matching terms. Documents with simliar context, but different term vocabulary would not be considered a match, therefore, resulting as false negatives. The positions of the words within a document is lost in the vector space representation. The model assumes the terms are independent. Under this assumption, documents are a <em>bag of words</em> and order does not matter. Often that is not the case. Terms can be dependent in situations such as:</p>
 <ul>
-<li><em>polysemy</em>: same terms used in different contexts - ie. <code class="language-text">I love my cat</code> vs <code class="language-text">cat lady</code>, which affects <em>precision</em> because irrelevant can be retrieved due to term matching.</li>
+<li><em>polysemy</em>: same terms used in different contexts - ie. <code class="language-text">I love my cat</code> vs <code class="language-text">cat lady</code>, which affects <em>precision</em> because irrelevant documents can be retrieved due to term matching.</li>
 <li><em>synonymity</em>: different terms use in the same contexts - ie. <code class="language-text">feline</code> vs <code class="language-text">cat</code>, which affects <em>recall</em> because documents that are relevant would not be retrieved.</li>
 <li><em>ordering</em>: different terms used in different positions in different contexts - ie. <code class="language-text">college junior</code> vs <code class="language-text">junior college</code>, which affects <em>precision</em> and <em>recall</em>.</li>
 </ul>
