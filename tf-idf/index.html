@@ -10,7 +10,7 @@
 <ul>
 <li><code class="language-text">IDF</code> implemented as <code class="language-text">log((docCount+1)/(docFreq+1)) + 1</code> where <code class="language-text">docFreq</code> is number of documents containing the term, and <code class="language-text">docCount</code> is total number of documents</li>
 <li><code class="language-text">TF</code> implemented as <code class="language-text">sqrt(freq)</code></li>
-<li><code class="language-text">fieldNorms</code> implemented as <code class="language-text">1/sqrt(length)</code></li>
+<li><code class="language-text">lengthNorm</code> implemented as <code class="language-text">1/sqrt(length)</code></li>
 </ul>
 <p>Keep in mind, this implementation <em>accounts</em> for document length, but does not allow you to adjust its <em>influence</em> to the overall value/score.</p>
 <h2>Limitations</h2>
