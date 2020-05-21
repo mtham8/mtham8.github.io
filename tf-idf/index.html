@@ -4,8 +4,18 @@
 <p>Let’s see how this can play out. We could set each coordinate in the document vector to be 1 if the document contains the term for the dimension, otherwise set it to 0. The query vector would be all 1’s, assuming each term has the same weight. Here’s an example:</p>
 <ul>
 <li>query: <code class="language-text">can my cat eat chicken</code> -> [1, 1, 1, 1, 1]</li>
-<li>document1: <code class="language-text">A cat can eat chicken. Chicken is part of a cat&#39;s diet.</code> -> [1, 0, 1, 1, 1] -> score: 4</li>
-<li>document2: <code class="language-text">The cat ran past the chicken to try to eat my mouse.</code> -> [0, 1, 1, 1, 1] -> score: 4</li>
+<li>
+<p>document1: <code class="language-text">A cat can eat chicken. Chicken is part of a cat&#39;s diet.</code> -> [1, 0, 1, 1, 1]</p>
+<ul>
+<li>score: 4</li>
+</ul>
+</li>
+<li>
+<p>document2: <code class="language-text">The cat ran past the chicken to try to eat my mouse.</code> -> [0, 1, 1, 1, 1]</p>
+<ul>
+<li>score: 4</li>
+</ul>
+</li>
 </ul>
 <p>This model would rank <code class="language-text">document1</code> and <code class="language-text">document2</code> equally relevant to <code class="language-text">query</code>. It rank a document mentioning a query term once in a footnote, as relevant as, another document that uses a query term repeatedly throughout the text. Hmm… the rankings do not seem right. We should be able to calcuate different weights for a term in the document given its frequency and other factors that could affect its relevancy. Enter TF-IDF! A plausible way to account for various factors that this current model does not. Instead of using 1 if the term is present, perhaps, we can use TF-IDF in the document vector.</p>
 <h2>TF-IDF (Term Frequency-Inverse Document Frequency)</h2>
@@ -22,8 +32,18 @@
 <p>Let’s see how using TF-IDF weighting, based on Lucene’s implementation, changes the relevancy scores in our earlier example.</p>
 <ul>
 <li>query: <code class="language-text">can my cat eat chicken</code></li>
-<li>document1: <code class="language-text">A cat can eat chicken. Chicken is part of a cat&#39;s diet.</code> -> score: 0.8746478677071488</li>
-<li>document2: <code class="language-text">The cat ran past the chicken to try to eat my mouse.</code> -> score: 0.8035574544093774</li>
+<li>
+<p>document1: <code class="language-text">A cat can eat chicken. Chicken is part of a cat&#39;s diet.</code></p>
+<ul>
+<li>score: 0.8746478677071488</li>
+</ul>
+</li>
+<li>
+<p>document2: <code class="language-text">The cat ran past the chicken to try to eat my mouse.</code></p>
+<ul>
+<li>score: 0.8035574544093774</li>
+</ul>
+</li>
 </ul>
 <p>TF-IDF Implementation: <a href="https://gist.github.com/mtham8/8f93db2443b6214dc0734c01d029b80c">https://gist.github.com/mtham8/8f93db2443b6214dc0734c01d029b80c</a></p>
 <p>Playground: <a href="https://play.golang.org/p/liKplv-nSiQ">https://play.golang.org/p/liKplv-nSiQ</a></p>
