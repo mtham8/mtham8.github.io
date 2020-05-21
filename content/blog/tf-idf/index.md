@@ -8,7 +8,7 @@ There are many similarity models floating in the universe, holding different ass
 
 ## VSM (Vector Space Model)
 
-A vector space model is a model where each term of the query is considered a vector dimension. It assumes that each term is a dimension that is orthogonal to all other terms, which means terms are modeled as occurring in documents independently. When evaluating the query to a document considered, one vector represents the query, and another, the document. The cosine similarity of the two vectors can be used to represent the relevance of the document to the query. A cosine value of 0 means that the query and the document vector are orthogonal and have no match (ie. none of the query terms were in the document). Cosine similarity is advantageous over Euclidean distance because cosine similarity measures the angle between two vectors, which means it focuses on the _direction_ of the two vectors - while Euclidean distance captures the _magnitude_. Two vectors can be far apart by Euclidean distance, ie. imagine a short vector and a long vector, but still have a small angle between them.
+A vector space model is a model where each term of the query is considered a vector dimension. It assumes that each term is a dimension that is orthogonal to all other terms, which means terms are modeled as occurring in documents independently. When evaluating the query to a document considered, one vector represents the query, and another, the document. The cosine similarity of the two vectors can be used to represent the relevance of the document to the query. A cosine value of 0 means that the query and the document vector are orthogonal and have no match (ie. none of the query terms were in the document). Cosine similarity is advantageous over Euclidean distance because cosine similarity measures the angle between two vectors, which means it captures the _direction_ of the two vectors - while Euclidean distance captures the _magnitude_. Two vectors can be far apart by Euclidean distance, ie. imagine a short vector and a long vector, but have a small angle between them.
 
 Let's see how this can play out. We could set each coordinate in the document vector to be 1 if the document contains the term for the dimension, otherwise set it to 0. The query vector would be all 1's, assuming each term has the same weight. Here's an example:
 
@@ -18,7 +18,7 @@ Let's see how this can play out. We could set each coordinate in the document ve
 
 * document2: `The cat ran past the chicken to try to eat my mouse.` -> [0, 1, 1, 1, 1] -> score: 4
 
-This model would rank `document1` and `document2` equally relevant to the `query`. It rank a document mentioning a query term once in a footnote, as relevant as, another document that uses a query term repeatedly throughout the text. Hmm... that ranking does not seem right. We should be able to calcuate different weights for a term in the document given its frequency and other factors that could affect its relevancy. Enter TF-IDF! A plausible way to account for various factors that this current model does not. Instead of using 1 if the term is present, perhaps, we can use TF-IDF in the document vector.
+This model would rank `document1` and `document2` equally relevant to `query`. It rank a document mentioning a query term once in a footnote, as relevant as, another document that uses a query term repeatedly throughout the text. Hmm... the rankings do not seem right. We should be able to calcuate different weights for a term in the document given its frequency and other factors that could affect its relevancy. Enter TF-IDF! A plausible way to account for various factors that this current model does not. Instead of using 1 if the term is present, perhaps, we can use TF-IDF in the document vector.
 
 ## TF-IDF (Term Frequency-Inverse Document Frequency)
 
@@ -37,6 +37,20 @@ IDF * TF * lengthNorm
 * `lengthNorm` implemented as `1/sqrt(length)`
 
 Keep in mind, this implementation _accounts_ for document length, but does not allow you to adjust its _influence_ to the overall value.
+
+Let's see how using TF-IDF weighting, based on Lucene's implementation, changes the relevancy scores in our earlier example.
+
+* query: `can my cat eat chicken`
+
+* document1: `A cat can eat chicken. Chicken is part of a cat's diet.` -> score: 0.8746478677071488
+
+* document2: `The cat ran past the chicken to try to eat my mouse.` -> score: 0.8035574544093774
+
+TF-IDF Implementation: https://gist.github.com/mtham8/8f93db2443b6214dc0734c01d029b80c
+
+Playground: https://play.golang.org/p/liKplv-nSiQ
+
+We can see here `document1` is ranked higher than `document2` in relevancy to `query` using TF-IDF weighting. Hooray! This ranking is closer to what we are looking for. There were a few text cleaning steps I had to do beforehand, ie. lowercasing all the terms, and omitting some punctuations (periods). I also tokenized the documents, ie. splitting the sentences into terms. These transformations are common preprocessing steps, and depending on the corpus and search needs, one might preprocess the text differently.
 
 ## Limitations
 
