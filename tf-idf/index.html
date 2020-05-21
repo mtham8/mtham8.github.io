@@ -53,7 +53,7 @@
 </li>
 </ul>
 <p>TF-IDF Implementation: <a href="https://gist.github.com/mtham8/8f93db2443b6214dc0734c01d029b80c">https://gist.github.com/mtham8/8f93db2443b6214dc0734c01d029b80c</a></p>
-<p>Playground: <a href="https://play.golang.org/p/liKplv-nSiQ">https://play.golang.org/p/liKplv-nSiQ</a></p>
+<p>Playground: <a href="https://play.golang.org/p/C-0tNSh722S">https://play.golang.org/p/C-0tNSh722S</a></p>
 <p>We can see here <code class="language-text">document1</code> is ranked higher than <code class="language-text">document2</code> in relevancy to <code class="language-text">query</code> using TF-IDF weighting. Hooray! This ranking is closer to what we are looking for. There were a few text cleaning steps I had to do beforehand, ie. lowercasing all the terms, and omitting some punctuations (periods). I also tokenized the documents, ie. splitting the sentences into terms. These transformations are common preprocessing steps, and depending on the corpus and search needs, one might preprocess the text differently.</p>
 <h2>Limitations</h2>
 <p>There are some limitations using the TF-IDF VSM. IDF is calculated not based on relevance information, but on matching terms. Documents with simliar context, but different term vocabulary would not be considered a match, therefore, resulting in false negatives. The positions of the words within a document is lost in the vector space representation. The model assumes the terms are independent. Under this assumption, documents are a <em>bag of words</em> and order does not matter. Often that is not the case. Terms can be dependent in situations such as:</p>
