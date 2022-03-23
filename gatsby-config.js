@@ -5,7 +5,7 @@ module.exports = {
     description: `A place for thoughts to roam free.`,
     siteUrl: `https://mtham8.github.io/`,
     social: {
-      twitter: `__m_th`,
+      twitter: `__mathmathmath`,
       github: `mtham8`
     },
   },

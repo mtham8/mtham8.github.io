@@ -12,11 +12,16 @@ A vector space model is a model where each term of the query is considered a vec
 
 Let's see how this can play out. We could set each coordinate in the document vector to be 1 if the document contains the term for the dimension, otherwise set it to 0. The query vector would be all 1's, assuming each term has the same weight. Here's an example:
 
-* query: `can my cat eat chicken` -> [1, 1, 1, 1, 1]
+* query: `can my cat eat chicken`
+  * vector: [1, 1, 1, 1, 1]
 
-* document1: `A cat can eat chicken. Chicken is part of a cat's diet.` -> [1, 0, 1, 1, 1] -> score: 4
+* document1: `A cat can eat chicken. Chicken is part of a cat's diet.`
+  * vector: [1, 0, 1, 1, 1]
+  * score: 4
 
-* document2: `The cat ran past the chicken to try to eat my mouse.` -> [0, 1, 1, 1, 1] -> score: 4
+* document2: `The cat ran past the chicken to try to eat my mouse.`
+  * vector: [0, 1, 1, 1, 1]
+  * score: 4
 
 This model would rank `document1` and `document2` equally relevant to `query`. It rank a document mentioning a query term once in a footnote, as relevant as, another document that uses a query term repeatedly throughout the text. Hmm... the rankings do not seem right. We should be able to calcuate different weights for a term in the document given its frequency and other factors that could affect its relevancy. Enter TF-IDF! A plausible way to account for various factors that this current model does not. Instead of using 1 if the term is present, perhaps, we can use TF-IDF in the document vector.
 
@@ -42,13 +47,17 @@ Let's see how using TF-IDF weighting, based on Lucene's implementation, changes 
 
 * query: `can my cat eat chicken`
 
-* document1: `A cat can eat chicken. Chicken is part of a cat's diet.` -> score: 0.8746478677071488
+* document1: `A cat can eat chicken. Chicken is part of a cat's diet.`
+  * vector: [0.2886751345948129, 0, 0.1716274399381882, 0.1716274399381882, 0.24271785323595957]
+  * score: 0.8746478677071488
 
-* document2: `The cat ran past the chicken to try to eat my mouse.` -> score: 0.8035574544093774
+* document2: `The cat ran past the chicken to try to eat my mouse.`
+  * vector: [0, 0.2886751345948129, 0.1716274399381882, 0.1716274399381882, 0.1716274399381882]
+  * score: 0.8035574544093774
 
 TF-IDF Implementation: https://gist.github.com/mtham8/8f93db2443b6214dc0734c01d029b80c
 
-Playground: https://play.golang.org/p/liKplv-nSiQ
+Playground: https://play.golang.org/p/XZOC8fHUyWs
 
 We can see here `document1` is ranked higher than `document2` in relevancy to `query` using TF-IDF weighting. Hooray! This ranking is closer to what we are looking for. There were a few text cleaning steps I had to do beforehand, ie. lowercasing all the terms, and omitting some punctuations (periods). I also tokenized the documents, ie. splitting the sentences into terms. These transformations are common preprocessing steps, and depending on the corpus and search needs, one might preprocess the text differently.
 

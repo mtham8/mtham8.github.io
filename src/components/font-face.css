@@ -8,7 +8,7 @@
   font-style: normal;
 }
 
-body, h1, h3, a, p {
+body, h1, h2, h3, a, p {
   /* font-family: "Input Font", sans-serif; */
   font-family: 'Roboto Slab',Georgia,Times,serif;
   background-color: #fff5db;

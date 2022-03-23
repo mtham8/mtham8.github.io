@@ -55,7 +55,7 @@ const Bio = () => {
         }}
       />
       <p>
-        Written by <strong>{author}</strong> who enjoys reading, building software, and petting cats.
+        Written by <strong>{author}</strong> who enjoys reading, writing software, and petting cats.
         {` `}
         <a href={`https://twitter.com/${social.twitter}`}>
           Twitter
